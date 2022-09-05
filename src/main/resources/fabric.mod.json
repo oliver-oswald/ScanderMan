@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "scanderman",
+  "version": "${version}",
+
+  "name": "Scander Man Mod",
+  "description": "Adds the Scanderman to MInecraft",
+  "authors": [
+    "ollixd123"
+  ],
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/FabricMC/fabric-example-mod"
+  },
+
+  "license": "CC0-1.0",
+  "icon": "assets/scanderman/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "ollixd123.scander.man.ScanderMan"
+    ],
+    "client":[
+      "ollixd123.scander.man.EntityTestingClient"
+    ]
+  },
+  "mixins": [
+    "modid.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.11.3",
+    "fabric": "*",
+    "minecraft": "1.18.x",
+    "java": ">=17"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}
