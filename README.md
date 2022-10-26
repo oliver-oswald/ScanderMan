@@ -4,7 +4,7 @@
 
 ## Description
 
-This Minecraft mod introduces the Sanderman to Minecraft. The Scanderman is a creature that belongs to the family of the Enderman. The goal of the Sanderman is to make the game unplayable. He achieves this by disturbing the player so much until the player closes the game and when the player tries to kill the Sanderman the game immediately crashes.
+This Minecraft mod introduces the Scanderman to Minecraft. The Scanderman is a creature that belongs to the family of the Enderman. The goal of the Sanderman is to make the game unplayable. He achieves this by disturbing the player so much until the player closes the game and when the player tries to kill the Sanderman the game immediately crashes.
 
 ## What it can do
 
