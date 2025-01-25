@@ -1,6 +1,7 @@
 package ch.ollixd123.scanderman.entity.custom;
 
 import ch.ollixd123.scanderman.entity.ModEntity;
+import com.google.common.base.Predicate;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.*;
@@ -20,7 +21,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumSet;
 
-public class ScanderManEntity extends EndermanEntity {
+public class ScanderManEntity extends EndermanEntity implements Predicate<LivingEntity> {
     public ScanderManEntity(EntityType<? extends EndermanEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -61,6 +62,16 @@ public class ScanderManEntity extends EndermanEntity {
         // Skip any default anger behavior in the parent class
         this.setAngerTime(0);
         super.tickMovement();
+    }
+
+    @Override
+    public boolean apply(LivingEntity input) {
+        return false;
+    }
+
+    @Override
+    public boolean test(LivingEntity input) {
+        return Predicate.super.test(input);
     }
 
     static class FollowPlayerGoal extends Goal {

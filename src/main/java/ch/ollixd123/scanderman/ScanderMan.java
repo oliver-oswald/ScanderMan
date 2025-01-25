@@ -1,8 +1,10 @@
 package ch.ollixd123.scanderman;
 
 import ch.ollixd123.scanderman.entity.ModEntity;
+import ch.ollixd123.scanderman.entity.custom.ScanderManEntity;
 import net.fabricmc.api.ModInitializer;
 
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,5 +15,6 @@ public class ScanderMan implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		ModEntity.registerModEntities();
+		FabricDefaultAttributeRegistry.register(ModEntity.SCANDERMAN, ScanderManEntity.createAttributes());
 	}
 }
