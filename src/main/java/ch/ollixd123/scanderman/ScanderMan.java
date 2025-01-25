@@ -1,5 +1,6 @@
 package ch.ollixd123.scanderman;
 
+import ch.ollixd123.scanderman.entity.ModEntity;
 import net.fabricmc.api.ModInitializer;
 
 import org.slf4j.Logger;
@@ -11,5 +12,6 @@ public class ScanderMan implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		ModEntity.registerModEntities();
 	}
 }
