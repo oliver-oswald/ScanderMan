@@ -3,6 +3,7 @@ package ch.ollixd123.scanderman;
 import ch.ollixd123.scanderman.entity.ModEntity;
 import ch.ollixd123.scanderman.entity.custom.ScanderManEntity;
 import ch.ollixd123.scanderman.item.ModItem;
+import ch.ollixd123.scanderman.world.gen.ModWorldGeneration;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
@@ -17,6 +18,7 @@ public class ScanderMan implements ModInitializer {
 	public void onInitialize() {
 		ModEntity.registerModEntities();
 		ModItem.registerModItems();
+		ModWorldGeneration.generateModWorldGeneration();
 		FabricDefaultAttributeRegistry.register(ModEntity.SCANDERMAN, ScanderManEntity.createAttributes());
 	}
 }
