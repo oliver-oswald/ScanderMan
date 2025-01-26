@@ -1,27 +1,24 @@
 package ch.ollixd123.scanderman.entity.custom;
 
-import ch.ollixd123.scanderman.entity.ModEntity;
-import com.google.common.base.Predicate;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.EndermanEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.Items;
-import net.minecraft.recipe.Ingredient;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumSet;
+import java.util.List;
+import java.util.function.Predicate;
 
 public class ScanderManEntity extends EndermanEntity implements Predicate<LivingEntity> {
+
     public ScanderManEntity(EntityType<? extends EndermanEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -35,6 +32,7 @@ public class ScanderManEntity extends EndermanEntity implements Predicate<Living
 
         this.goalSelector.add(0, new FollowPlayerGoal(this, 3D, 16.0F, 0.5F));
         this.goalSelector.add(1, new ThrowDirtBlockAtPlayerGoal(this, 2D, 2D));
+        this.goalSelector.add(2, new PickupPlayerGoal(this, 2D));
     }
 
     public static DefaultAttributeContainer.Builder createAttributes() {
@@ -64,14 +62,19 @@ public class ScanderManEntity extends EndermanEntity implements Predicate<Living
         super.tickMovement();
     }
 
+    private void pickupPlayer(PlayerEntity player) {
+        player.startRiding(this);
+    }
+
     @Override
-    public boolean apply(LivingEntity input) {
-        return false;
+    public Vec3d updatePassengerForDismount(LivingEntity passenger) {
+        // When the player dismounts, place them safely nearby
+        return this.getPos().add(0, 1.0, 0); // Drop the player slightly above the ScanderMan's position
     }
 
     @Override
     public boolean test(LivingEntity input) {
-        return Predicate.super.test(input);
+        return false;
     }
 
     static class FollowPlayerGoal extends Goal {
@@ -169,5 +172,39 @@ public class ScanderManEntity extends EndermanEntity implements Predicate<Living
         private boolean canThrow() {
             return System.currentTimeMillis() - lastThrowTime >= cooldown;
         }
+    }
+
+    static class PickupPlayerGoal extends Goal {
+        private final ScanderManEntity scanderMan;
+        private final double cooldown;
+        private PlayerEntity targetPlayer;
+        private long lastPickupTime;
+
+        public PickupPlayerGoal(ScanderManEntity scanderMan, double cooldown) {
+            this.scanderMan = scanderMan;
+            this.cooldown = cooldown * 1000;
+        }
+
+        @Override
+        public boolean canStart() {
+            this.targetPlayer = scanderMan.getWorld().getClosestPlayer(scanderMan, 5.0);
+            return targetPlayer != null && targetPlayer.getFirstPassenger() == null;
+        }
+
+        @Override
+        public void tick() {
+            if (targetPlayer != null && canPickup()) {
+                scanderMan.pickupPlayer(targetPlayer);
+            }
+
+            this.lastPickupTime = System.currentTimeMillis();
+        }
+
+        @Override
+        public boolean shouldContinue() {
+            return false;
+        }
+
+        private boolean canPickup() { return System.currentTimeMillis() - lastPickupTime >= cooldown; }
     }
 }
