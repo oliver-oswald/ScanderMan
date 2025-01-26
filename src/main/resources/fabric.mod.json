@@ -1,41 +1,40 @@
 {
-  "schemaVersion": 1,
-  "id": "scanderman",
-  "version": "${version}",
-
-  "name": "Scander Man Mod",
-  "description": "Adds the Scanderman to MInecraft",
-  "authors": [
-    "ollixd123"
-  ],
-  "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
-  },
-
-  "license": "CC0-1.0",
-  "icon": "assets/scanderman/icon.png",
-
-  "environment": "*",
-  "entrypoints": {
-    "main": [
-      "ollixd123.scander.man.ScanderMan"
-    ],
-    "client":[
-      "ollixd123.scander.man.EntityTestingClient"
-    ]
-  },
-  "mixins": [
-    "modid.mixins.json"
-  ],
-
-  "depends": {
-    "fabricloader": ">=0.11.3",
-    "fabric": "*",
-    "minecraft": "1.18.x",
-    "java": ">=17"
-  },
-  "suggests": {
-    "another-mod": "*"
-  }
+	"schemaVersion": 1,
+	"id": "scander-man",
+	"version": "${version}",
+	"name": "Scander Man",
+	"description": "Adds the ScanderMan to Minecraft",
+	"authors": [
+		"ollixd123"
+	],
+	"contact": {
+		"homepage": "https://ollixd123.ch",
+		"sources": "https://github.com/oliver-oswald/ScanderMan"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/scander-man/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"ch.ollixd123.scanderman.ScanderMan"
+		],
+		"fabric-datagen": [
+			"ch.ollixd123.scanderman.ScanderManDataGenerator"
+		],
+		"client": [
+			"ch.ollixd123.scanderman.ScanderManClient"
+		]
+	},
+	"mixins": [
+		"scander-man.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.16.10",
+		"minecraft": "~1.21.4",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
 }
